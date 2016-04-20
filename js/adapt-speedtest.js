@@ -25,17 +25,21 @@ define([
 
         Adapt.config.set('_canLoadData', false);
 
-        speedtest.test(function(name, kbps) {
-            console.log("speedtest enabled", name, kbps);
+        var continued = false;
+
+        speedtest.onchange(function(name, kbps) {
+            console.log("speedtest", name, kbps);
+
+            Adapt.trigger("network:change", name, kbps);
+
+            if (continued) return;
+            continued = true;
             _.defer(function() {
                 Adapt.trigger('configModel:loadCourseData');
             });
-        });
-
-        speedtest.onchange(function(name, kbps) {
-            console.log("speedtest changed", name, kbps);
-        }, {
-            immediate: false
+        },{
+            immediate: true, // (default: true) callback once bound
+            on_rate_change: true  // (default: false) callback on kbps change and connection name change
         });
 
     });

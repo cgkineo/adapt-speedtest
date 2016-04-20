@@ -6,6 +6,11 @@ define([
     speedtest.config({
         imagesURL: "assets/speedtest",
         no_wait_for_document: 1,
+        interval: 20000, // milliseconds between checks (20sec)
+        sample_age: 60000, // take lowest speed in latest timeslice (1min)
+        idle_timeout: 60000, // time before idle state (1min)
+        offline_threshold_kbps: 0,
+        slow_threshold_kbps: 1000,
     });
 
     Adapt.once('configModel:dataLoaded', function(view) {
@@ -25,6 +30,12 @@ define([
             _.defer(function() {
                 Adapt.trigger('configModel:loadCourseData');
             });
+        });
+
+        speedtest.onchange(function(name, kbps) {
+            console.log("speedtest changed", name, kbps);
+        }, {
+            immediate: false
         });
 
     });

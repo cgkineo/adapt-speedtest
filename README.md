@@ -17,9 +17,9 @@ Adapt.on('network:change', function(name, kbps) {
 	switch (name) {
 	case "offline": // kbps == 0
 		break;
-	case "slow": // kbps <= 1000
+	case "slow": // kbps <= 1000 which is <= good 3g
 		break;
-	case "fast": // kbps > 1000
+	case "fast": // kbps > 1000 which is >= dsl
 		break;
 	}
 

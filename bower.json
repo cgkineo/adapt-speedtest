@@ -1,0 +1,16 @@
+{
+  "name": "adapt-speedtest",
+  "version": "2.0.3",
+  "framework": "^2.0.0",
+  "homepage": "https://github.com/cgkineo/adapt-speedtest",
+  "displayName" : "SpeedTest",
+  "extension" : "speedtest",
+  "description": "An extension which facilitates connection speed detection",
+  "main": "/js/adapt-speedtest.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-extension"
+  ],
+  "license": "GPLv3",
+  "targetAttribute": "_speedtest"
+}

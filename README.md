@@ -6,4 +6,4 @@ Adds ``speedtest-offline``, ``speedtest-slow`` or ``speedtest-fast`` to the ``ht
 
 The threshold for fast is > 1mb/s.  
 
-Uses library (https://github.com/cgkineo/speedtest)[https://github.com/cgkineo/speedtest]
+Uses library [https://github.com/cgkineo/speedtest](https://github.com/cgkineo/speedtest)

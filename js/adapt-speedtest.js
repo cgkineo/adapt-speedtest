@@ -10,7 +10,7 @@ define([
         sample_age: 60000, // take lowest speed in latest timeslice (1min)
         idle_timeout: 60000, // time before idle state (1min)
         offline_threshold_kbps: 0,
-        slow_threshold_kbps: 2500,
+        slow_threshold_kbps: 2000,
     });
 
     Adapt.once('configModel:dataLoaded', function(view) {

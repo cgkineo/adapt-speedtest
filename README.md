@@ -12,7 +12,7 @@ config.json
 ```json
 "_speedtest": {
   "_isEnabled": true,
-  "_force": "",
+  "_force": "slow|fast",
   "_offlineThreshold": "0.4mb/s",
   "_slowThreshold": "1mb/s",
   "_repeatSeconds": 30

@@ -33,6 +33,3 @@ Adapt.on('network:change', function(speed) {
 
 });
 ```
-
-
-Uses library [https://github.com/cgkineo/speedtest](https://github.com/cgkineo/speedtest)

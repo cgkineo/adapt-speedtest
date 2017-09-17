@@ -6,22 +6,30 @@ Adds ``speedtest-offline``, ``speedtest-slow`` or ``speedtest-fast`` to the ``ht
 
 Triggers ``'network:change'`` event when the lowest reported bitrate changes.
 
-
-The threshold for fast is > 1mb/s.  
-
 Usage:
 
+config.json
+```json
+"_speedtest": {
+  "_isEnabled": true,
+  "_force": "",
+  "_offlineThreshold": "0.4mb/s",
+  "_slowThreshold": "1mb/s",
+  "_repeatSeconds": 30
+}
 ```
-Adapt.on('network:change', function(name, kbps) {
-	
-	switch (name) {
-	case "offline": // kbps == 0
-		break;
-	case "slow": // kbps <= 1000 which is <= good 3g
-		break;
-	case "fast": // kbps > 1000 which is >= dsl
-		break;
-	}
+
+```
+Adapt.on('network:change', function(speed) {
+
+  switch (speed) {
+    case speed.ENUM.OFFLINE: // kbps < 400 very slow 3g
+      break;
+    case speed.ENUM.SLOW: // kbps <= 1000 which is <= fast 3g
+      break;
+    case speed.ENUM.FAST: // kbps > 1000 which is >= dsl
+      break;
+  }
 
 });
 ```

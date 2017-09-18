@@ -2,7 +2,7 @@
 
 An extension which facilitates connection speed detection.  
 
-Adds ``speedtest-offline``, ``speedtest-slow`` or ``speedtest-fast`` to the ``html`` tag.  
+Adds ``speed-offline``, ``speed-slow`` or ``speed-fast`` to the ``html`` tag.  
 
 Triggers ``'network:change'`` event when the lowest reported bitrate changes.
 

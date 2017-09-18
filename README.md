@@ -2,13 +2,12 @@
 
 An extension which facilitates connection speed detection.  
 
+### Usage
+
+#### html tag
 Adds ``speed-offline``, ``speed-slow`` or ``speed-fast`` to the ``html`` tag.  
 
-Triggers ``'network:change'`` event when the lowest reported bitrate changes.
-
-Usage:
-
-config.json
+#### config.json
 ```json
 "_speedtest": {
   "_isEnabled": true,
@@ -19,6 +18,8 @@ config.json
 }
 ```
 
+#### javascript
+Triggers ``'network:change'`` event when changing between offline, slow and fast modes.
 ```
 Adapt.on('network:change', function(speed) {
 

@@ -4,7 +4,6 @@ define([
 
   var SPEED = new ENUM([
     "UNKNOWN",
-    "OFFLINE",
     "SLOW",
     "FAST"
   ]);
@@ -65,20 +64,17 @@ define([
     speed: SPEED.UNKNOWN,
     bps: 0,
     setSpeed: function(speed, bps) {
-      
+
       this.bps = bps;
       if (this.speed === speed) return;
 
       this.speed = speed;
       switch(speed) {
-        case SPEED.OFFLINE:
-          this.$html.addClass("speed-offline").removeClass("speed-slow speed-fast");
-          break;
         case SPEED.SLOW:
-          this.$html.addClass("speed-slow").removeClass("speed-fast speed-offline");
+          this.$html.addClass("speed-slow").removeClass("speed-fast");
           break;
         case SPEED.FAST:
-          this.$html.addClass("speed-fast").removeClass("speed-slow speed-offline");
+          this.$html.addClass("speed-fast").removeClass("speed-slow");
           break;
       }
 
@@ -86,25 +82,22 @@ define([
 
     },
 
-    setRates: function(offlineThreshold, slowThreshold, currentSpeed) {
+    setRates: function(slowThreshold, currentSpeed) {
 
-      offlineThreshold = offlineThreshold || "0.4mb";
       slowThreshold = slowThreshold || "1mb";
       currentSpeed = currentSpeed || "0.6mb";
 
-      var offlineThresholdbitsps = this.textSizeToBytes(offlineThreshold) * 8;
       var slowThresholdbitsps = this.textSizeToBytes(slowThreshold) * 8;
       var currentSpeedbitsps = this.textSizeToBytes(currentSpeed) * 8;
-      var isBelowOfflineThreshold = (currentSpeedbitsps <= offlineThresholdbitsps);
       var isBelowSlowThreshold = (currentSpeedbitsps <= slowThresholdbitsps);
-      var speed = isBelowOfflineThreshold ? SPEED.OFFLINE : isBelowSlowThreshold ? SPEED.SLOW : SPEED.FAST;
+      var speed = isBelowSlowThreshold ? SPEED.SLOW : SPEED.FAST;
 
       Adapt.log.debug("Speedtest -", speed.asString, "threshold:", slowThreshold, "predicted speed:", currentSpeed);
 
       this.$html.attr({
         'data-speed': currentSpeed+"/s"
       });
-        
+
       this.setSpeed(speed, currentSpeedbitsps);
 
     },
@@ -125,7 +118,7 @@ define([
     _assetIndex: 0,
     _img: null,
     _startTest: function() {
-      
+
       this._assetIndex = 0;
       this._inTest = true;
       this._latency = 0;
@@ -145,19 +138,17 @@ define([
 
     _imageErrored: function() {
 
-      var offlineThresholdBps = this.textSizeToBytes(this.config._offlineThreshold || "0.4mb"); 
-      var offlineThresholdMbps = this.bytesSizeToString(offlineThresholdBps, "mb");
       var slowThresholdBps = this.textSizeToBytes(this.config._slowThreshold || "1mb");
       var slowThresholdMbps = this.bytesSizeToString(slowThresholdBps, "mb");
       var predictedConnectionSpeedMbps = this.bytesSizeToString(0, "mb");
-      this.setRates(offlineThresholdMbps, slowThresholdMbps, predictedConnectionSpeedMbps);
+      this.setRates(slowThresholdMbps, predictedConnectionSpeedMbps);
 
       this._runCallbacks();
 
     },
 
     _imageLoaded: function() {
-      
+
       var asset = this.assets[this._assetIndex];
       asset.endTime = Date.now();
       asset.totalDuration = (asset.endTime - asset.startTime) / 1000;
@@ -199,13 +190,11 @@ define([
         return;
       }
 
-      var offlineThresholdBps = this.textSizeToBytes(this.config._offlineThreshold || "0.4mb"); 
-      var offlineThresholdMbps = this.bytesSizeToString(offlineThresholdBps, "mb");
       var slowThresholdBps = this.textSizeToBytes(this.config._slowThreshold || "1mb");
       var slowThresholdMbps = this.bytesSizeToString(slowThresholdBps, "mb");
       var predictedConnectionSpeedMbps = this.bytesSizeToString(averagePredictedConnectionSpeedBps, "mb");
-      this.setRates(offlineThresholdMbps, slowThresholdMbps, predictedConnectionSpeedMbps);
-      
+      this.setRates(slowThresholdMbps, predictedConnectionSpeedMbps);
+
       this._runCallbacks();
 
     },
@@ -243,7 +232,7 @@ define([
     },
 
     bytesSizeToString: function(number, size) {
-      
+
       var sizes = [ "b", "kb", "mb", "gb" ];
       var sizeIndex = sizes.indexOf(size.toLowerCase());
       var isBytes = (size.indexOf("B") != -1);

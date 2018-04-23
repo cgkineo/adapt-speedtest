@@ -37,7 +37,7 @@ define([
 
       this.config = Adapt.config.get("_speedtest");
       if (!this.config || this.config._force || !this.config._isEnabled) {
-        var forceSpeed = SPEED(this.config._force.toUpperCase());
+        var forceSpeed = SPEED(this.config && this.config._force && this.config._force.toUpperCase());
         return this.setSpeed(forceSpeed || SPEED.SLOW, 0);
       }
 
